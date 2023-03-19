@@ -1,38 +1,85 @@
 import { useEffect, useState } from "react"
+import styled from "styled-components"
 import useApi from "../../hooks/useApi"
 
-const general = {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center'
+const StyledMain = styled.div`
+
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 5%;
+
+.textArea{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+}
+input{
+    width: 100%;
+    height: 100px;
+    background-color: lightcyan;
+    border-radius: 10px;
+    border: 2px solid blueviolet;
+    padding: 2%;
 }
 
-const listArea = {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
+button{
+    width: 100%;
+    height: 30px;
+    border-radius: 10px;
+    border: 2px solid blueviolet;
+    background-color: transparent;
+    color: blueviolet;
+    font-weight: 800;
+    &:hover{
+        background-color: blueviolet;
+        color: #fff;
+        transform: scale(1.01);
+    }
+}
+.msgArea{
+    display: flex;
+    width: 100%;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 3%;
+    .msgbox{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        height: 150px;
+        width: 250px;
+        border-radius: 10px;
+        background-color: blueviolet;
+        color: #fff;
+        font-weight: 800;
+        padding: 1%;
+        box-shadow: 1px 1px 10px -2px black;
+    }
 }
 
-const textArea = {
-    width: '300px',
-    height:'100px',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'center'
+@media (max-width: 800px){
+    .msgArea{
+        .msgbox{
+            width: 100%;
+        }
+    }
 }
-const msgbox = {
-    backgroundColor: 'blue',
-    display: 'flex',
-    color: 'white',
-    width: '25%',
-    height: '30px',
-    margin: '10px'
-}
+
+
+`;
+
+
 export default function HomePage() {
     const [text, setText] = useState('')
     const [msgList, setMsgList] = useState([])
+    const [empty, setEmpty] = useState(null)
     useEffect(() => {
         useApi.get('api/post')
             .then((res) => setMsgList(res.data))
@@ -52,30 +99,39 @@ export default function HomePage() {
     }
 
     let list = Object.keys(msgList)
+    window.addEventListener('enter', () => {
+        if (!text) {
+            setEmpty('Campo vazio')
+        } else {
+            setEmpty('')
+            sendPost()
+        }
+    })
     return (
-        <div style={general}>
+        <StyledMain>
             <div className="textArea">
-                <textarea
-                    style={textArea}
+                <input
+                    type={text}
                     onChange={(event) => setText(event.target.value)}
                     value={text}
-                    placeholder={'digite aqui ...'}></textarea>
-            </div>
+                    placeholder={'digite aqui ...'}></input>
 
-            <button onClick={() => sendPost()} >submit</button>
-            <div style={listArea}>
+                <span>{empty}</span>
+                <button onClick={() => sendPost()} >Enviar mini nota</button>
+            </div>
+            <div className="msgArea">
 
                 {
                     (!(msgList)
                         ? 'vazio'
-                        : list.map((number) =>(
-                        <div className="msgbox" style={msgbox}>
-                            {msgList[number].msg}
-                        </div>
+                        : list.map((number) => (
+                            <div className="msgbox">
+                                {msgList[number].msg}
+                            </div>
                         ))
                     )
                 }
             </div>
-        </div>
+        </StyledMain>
     )
 }
