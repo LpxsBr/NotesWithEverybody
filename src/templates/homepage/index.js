@@ -61,6 +61,12 @@ button{
         font-weight: 800;
         padding: 1%;
         box-shadow: 1px 1px 10px -2px black;
+        .date{
+            position: absolute;
+            bottom: 2px;
+            right: 5px;
+            color: #aaa;
+        }
     }
 }
 
@@ -83,13 +89,14 @@ export default function HomePage() {
     useEffect(() => {
         useApi.get('api/post')
             .then((res) => setMsgList(res.data))
-            .catch((err) => console.log(err))
+            .catch((err ) => console.log(err))
     }, [])
 
+    const dt = new Date;
     const sendPost = () => {
         useApi.post(
             'api/post',
-            { msg: text },
+            { msg: text, date: String(dt.getDate()) },
             { headers: { 'Content-Type': 'application/json' } })
             .then((res) => {
                 console.log(res.data)
@@ -127,6 +134,7 @@ export default function HomePage() {
                         : list.map((number) => (
                             <div className="msgbox">
                                 {msgList[number].msg}
+                                <span className="date">{msgList[number].date}</span>
                             </div>
                         ))
                     )
