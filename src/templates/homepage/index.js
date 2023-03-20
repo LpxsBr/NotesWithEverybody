@@ -90,11 +90,12 @@ export default function HomePage() {
             .catch((err ) => console.log(err))
     }, [])
 
-    const dt = new Date;
+    const timeElapsed = Date.now();
+    const today = new Date(timeElapsed);
     const sendPost = () => {
         useApi.post(
             'api/post',
-            { msg: text, date: String(dt.getDate()) },
+            { msg: text, date: String(today.toUTCString()) },
             { headers: { 'Content-Type': 'application/json' } })
             .then((res) => {
                 console.log(res.data)
