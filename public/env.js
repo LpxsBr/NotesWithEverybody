@@ -1,6 +1,6 @@
 window.env = {
   "ALLUSERSPROFILE": "C:\\ProgramData",
-  "API_HOST": "http://localhost:8080",
+  "API_HOST": "https://api-shared-notes.vercel.app",
   "APPDATA": "C:\\Users\\ANSELMO LOPES\\AppData\\Roaming",
   "COLOR": "1",
   "CommonProgramFiles": "C:\\Program Files\\Common Files",
@@ -67,6 +67,6 @@ window.env = {
   "windir": "C:\\WINDOWS",
   "WSLENV": "WT_SESSION::WT_PROFILE_ID",
   "WT_PROFILE_ID": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
-  "WT_SESSION": "d5990655-5dd0-4898-8411-2649f726a4b7",
+  "WT_SESSION": "c8a7eb01-015a-4202-8b5f-e1cf85a686b2",
   "ZES_ENABLE_SYSMAN": "1"
 };
