@@ -61,10 +61,8 @@ button{
         font-weight: 800;
         padding: 1%;
         box-shadow: 1px 1px 10px -2px black;
+        gap: 5%;
         .date{
-            position: absolute;
-            bottom: 2px;
-            right: 5px;
             color: #aaa;
         }
     }
